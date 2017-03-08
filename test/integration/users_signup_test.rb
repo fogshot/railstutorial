@@ -1,5 +1,6 @@
 require 'test_helper'
 
+## /test/integration/users_signup_test.rb
 class UsersSignupTest < ActionDispatch::IntegrationTest
 
   test 'should reject invalid signup attempt' do
@@ -16,7 +17,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     assert_template 'users/new'
     assert_select 'div#error_explanation'
     assert_select 'div.alert'
-    assert_select 'div#error_explanation ul>li', 4
+    assert_select 'div#error_explanation ul>li', 5
   end
 
   test 'should accept valid signup attempt' do
@@ -34,6 +35,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     end
     follow_redirect!
     assert_template 'users/show'
+    assert is_logged_in?
     assert_not flash.blank?
   end
 
