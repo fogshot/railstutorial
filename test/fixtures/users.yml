@@ -1,6 +1,17 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 # Note: By convention, all user passwords in this file should default to 'password'
+
+alice:
+  name: Alice Addington
+  email: alice@wonderland.net
+  password_digest: <%= User.digest('password') %>
+  admin: true
+
+bob:
+  name: Bob Builder
+  email: bob@bobthemaster.com
+  password_digest: <%= User.digest('password') %>
 michael:
   name: Michael Example
   email: michael@example.com
@@ -9,16 +20,6 @@ michael:
 archer:
   name: Sterling Archer
   email: duchess@example.gov
-  password_digest: <%= User.digest('password') %>
-
-alice:
-  name: Alice Addington
-  email: alice@wonderland.net
-  password_digest: <%= User.digest('password') %>
-
-bob:
-  name: Bob Builder
-  email: bob@bobthemaster.com
   password_digest: <%= User.digest('password') %>
 
 lana:
