@@ -5,6 +5,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   def setup
     @user = users :alice
+    @unactivated_user = users :archer
     @other_user = users :bob
   end
 
@@ -40,7 +41,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       user: {
         password: '',
         password_confirmation: '',
-        admin: '1'
+        admin: '1',
       }
     }
     assert_not @other_user.reload.admin?
@@ -58,6 +59,20 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_no_difference 'User.count' do
       delete user_path(@user)
     end
+    assert_redirected_to root_url
+  end
+
+  test 'should only show activated users in index' do
+    log_in_as @user
+    @other_user.activated = false
+    @other_user.activated_at = nil
+    get users_path
+    refute_match @other_user.email, response.body
+  end
+
+  test 'should only show activated user' do
+    log_in_as @unactivated_user
+    get user_path(@unactivated_user)
     assert_redirected_to root_url
   end
 
